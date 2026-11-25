@@ -47,6 +47,7 @@ if clf is not None and classifier.FINETUNED.exists():
     except Exception as e:
         print(f"[fine-tuned classifier not loaded] {e}")
 
+
 def _pad_to_square(img: np.ndarray):
     """Pads HxWx3 image to a square (S, S, 3) and returns (padded_img, (top, left, h, w, s))."""
     h, w = img.shape[:2]
@@ -116,7 +117,6 @@ def run_pipeline(img: np.ndarray, threshold=DEFAULT_THRESHOLD, use_mask=True):
         ("Lesion-crop classifier", "fine-tuned MelaNet" if clf_ft else "MelaNet (not fine-tuned)"),
     ], columns=["Metric", "Value"]).astype(str)
     return (m.astype(np.uint8) * 255), overlay, show(r["p_orig"]), show(r["p_mask"]), details
-
 
 # ----------------------------------------------------------------- request log (network metrics)
 # One row per request: (timestamp, latency_s, success, client_ip, upload_bytes). Kept for the whole run.
@@ -209,7 +209,7 @@ def static_metrics():
 
 # ----------------------------------------------------------------- UI
 with gr.Blocks(title="Skin Lesion Analysis") as demo:
-    gr.Markdown("# Akriti")
+    gr.Markdown("# Skin lesion segmentation and melanoma classification")
 
     with gr.Tab("Analyse"):
         gr.Markdown("Research prototype for a student project. Not a medical device; the output is not a diagnosis.")
